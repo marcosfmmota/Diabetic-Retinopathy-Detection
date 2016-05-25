@@ -4,7 +4,7 @@ import cv2
 from matplotlib import pyplot as plt
 import numpy as np
 
-def histRGBChannels(image):
+def histBGRChannels(image):
     histB = cv2.calcHist([image],[0],None,[256],[0,256])
     histG = cv2.calcHist([image], [1], None, [256], [0, 256])
     histR = cv2.calcHist([image], [2], None, [256], [0, 256])
