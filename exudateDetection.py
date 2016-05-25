@@ -18,7 +18,7 @@ def exudateDetection(image,threshold,windowSize):
     for r in range(0,image.shape[0] - windowSize ,windowSize):
         for c in range(0,image.shape[1] - windowSize ,windowSize):
             windowImage = image[r:r+windowSize,c:c+windowSize]
-            histogram = histRGBChannels(windowImage)
+            histogram = histBGRChannels(windowImage)
             array_of_median=[]
 
             for i in range(len(histogram)):
