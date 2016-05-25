@@ -19,6 +19,14 @@ def convertColorToBlackWhite(colorImage):
     im_bw = cv2.threshold(im_gray,thresh,255,cv2.THRESH_BINARY)[1]
     return im_bw
 
+def maskWhiteCounter (mask_input):
+    counter = 0
+    for r in range(mask_input.shape[0]):
+        for c in range(mask_input.shape[1]):
+            if mask_input.item(r,c) == 255:
+                counter+=1
+    return counter
+
 def exudateDetection(image,threshold,windowSize):
     row,col,chan = image.shape
     #exudate_image = np.zeros([row,col,3])
@@ -38,10 +46,11 @@ def exudateDetection(image,threshold,windowSize):
             # #     exudate_image[r:r + windowSize, c:c + windowSize] = np.zeros([windowSize, windowSize])
 
             lower_color = np.array(threshold)
-            upper_color = np.array([255,255,255])
+            upper_color = np.array([140,255,255])
 
             exudate_mask = cv2.inRange(windowImage,lower_color,upper_color)
             #exudate_window = cv2.bitwise_and(windowImage,windowImage,mask=exudate_mask)
+            #print(exudate_mask)
 
             exudate_image[r:r + windowSize, c:c + windowSize] = exudate_mask #exudate_window
 
@@ -55,4 +64,6 @@ if __name__ == "__main__":
     threshold = [20,155,170]
     windowSize = 20
     exudate_image = exudateDetection(image,threshold,windowSize)
+    counter = maskWhiteCounter(exudate_image)
+    print(counter)
     cv2.imwrite("1008_equalized2_exudates.jpg",exudate_image)
