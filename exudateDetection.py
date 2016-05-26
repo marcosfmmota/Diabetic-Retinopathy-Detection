@@ -57,6 +57,21 @@ def exudateDetection(image,threshold,windowSize):
     #binaryImage = convertColorToBlackWhite(exudate_image)
     return exudate_image
 
+def gettingOpticalDisk(image2):
+    #erosion
+    kernel = np.ones((5,5), np.uint8)
+    erosion = cv2.erode(image2, kernel, iterations = 1)
+
+
+    #dilation
+
+    dilation = cv2.dilate(erosion, kernel, iterations=1)
+
+    return dilation
+
+
+
+
 
 if __name__ == "__main__":
     image = cv2.imread("1008_equalized2.jpg")
@@ -66,4 +81,14 @@ if __name__ == "__main__":
     exudate_image = exudateDetection(image,threshold,windowSize)
     counter = maskWhiteCounter(exudate_image)
     print(counter)
+
     cv2.imwrite("1008_equalized2_exudates.jpg",exudate_image)
+
+
+    ## parte de teste
+
+    imagem2 = cv2.imread("1008_equalized2_exudates.jpg", 0)
+    imageAfterErosion = gettingOpticalDisk(imagem2)
+    cv2.imwrite("image after erosion.jpg", imagem2)
+
+    ## fim dos testes
