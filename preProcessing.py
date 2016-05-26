@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
+import os
 
 
 def createClare(channelB, channelG, channelR):
@@ -21,7 +22,11 @@ def createClare(channelB, channelG, channelR):
 
     result = cv2.merge((cl1, cl2, cl3))
 
-    cv2.imwrite("image after equalization.jpg", result)
+    dirname = "afterEqualization"
+    os.mkdir(dirname)
+
+
+    cv2.imwrite(os.path.join(dirname, "image after equalization.jpg"), result)
 
     return result
 
