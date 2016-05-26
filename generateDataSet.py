@@ -5,7 +5,7 @@ import pandas as pd
 
 def linearSearch(inputArray,value):
     for i in inputArray:
-        if i==value:
+        if i == value:
             return True
     return False
 

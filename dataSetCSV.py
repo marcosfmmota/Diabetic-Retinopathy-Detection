@@ -16,11 +16,11 @@ def concatenateFiles(listOfFiles,pathOutFile):
                     outfile.write(line)
 
 
-folder0 = "C:\\Users\\MarcosFelipe\\Documents\\RetinaDataSet\\0\\"
-folder1 = "C:\\Users\\MarcosFelipe\\Documents\\RetinaDataSet\\1\\"
-folder2 = "C:\\Users\\MarcosFelipe\\Documents\\RetinaDataSet\\2\\"
-folder3 = "C:\\Users\\MarcosFelipe\\Documents\\RetinaDataSet\\3\\"
-folder4 = "C:\\Users\\MarcosFelipe\\Documents\\RetinaDataSet\\4\\"
+folder0 = "C:\\Users\\MarcosFelipe\\Documents\\RetinaTestSet\\0\\"
+folder1 = "C:\\Users\\MarcosFelipe\\Documents\\RetinaTestSet\\1\\"
+folder2 = "C:\\Users\\MarcosFelipe\\Documents\\RetinaTestSet\\2\\"
+folder3 = "C:\\Users\\MarcosFelipe\\Documents\\RetinaTestSet\\3\\"
+folder4 = "C:\\Users\\MarcosFelipe\\Documents\\RetinaTestSet\\4\\"
 
 filesArray0 = [x for x in os.listdir(folder0) if os.path.isfile(os.path.join(folder0,x))]
 filesArray1 = [x for x in os.listdir(folder1) if os.path.isfile(os.path.join(folder1,x))]
