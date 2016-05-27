@@ -2,7 +2,8 @@
 
 import cv2
 import numpy as np
-
+import os
+import matplotlib.pyplot as plt
 
 def histBGRChannels(image):
     histB = cv2.calcHist([image], [0], None, [256],[0,256])
@@ -48,7 +49,7 @@ def exudateDetection(image, threshold, windowSize):
             #      exudate_image[r:r + windowSize, c:c + windowSize] = np.zeros([windowSize, windowSize])
 
             lower_color = np.array(threshold)
-            upper_color = np.array([140, 255, 255])
+            upper_color = np.array([70, 255, 255])
 
             exudate_mask = cv2.inRange(windowImage, lower_color, upper_color)
             # exudate_window = cv2.bitwise_and(windowImage,windowImage,mask=exudate_mask)
@@ -76,22 +77,34 @@ def gettingOpticalDisk(image2):
 
 
 if __name__ == "__main__":
-    image = cv2.imread("1008_equalized2.jpg")
-    im_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    threshold = [20, 155, 170]
-    windowSize = 20
-    exudate_image = exudateDetection(image, threshold, windowSize)
-    counter = maskWhiteCounter(exudate_image)
-    print(counter)
+    pathFolder = "C:\\Users\\MarcosFelipe\\Documents\\RetinaNormalizedSet\\2\\"
+    filesArray = [x for x in os.listdir(pathFolder) if os.path.isfile(os.path.join(pathFolder,x))]
+    threshold = [30, 155, 180]
+    windowSize = 50
+    exudateFolder = pathFolder+"exudate\\"
+    array_exudate_pixels = []
 
-    cv2.imwrite("1008_equalized2_exudates.jpg",exudate_image)
+    if not os.path.exists(exudateFolder):
+        os.mkdir(exudateFolder)
 
+    for file_name in filesArray:
+        image = cv2.imread(pathFolder+file_name)
+        #im_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        exudate_image = exudateDetection(image, threshold, windowSize)
+        file_name_no_extension = os.path.splitext(file_name)[0]
+        counter = maskWhiteCounter(exudate_image)
+        array_exudate_pixels.append(counter)
+        cv2.imwrite(exudateFolder+file_name_no_extension+"_exudates.jpg",exudate_image)
+
+    plt.hist(array_exudate_pixels,bins=20)
+    plt.show()
+
+    print(np.average(array_exudate_pixels))
 
     ## parte de teste
 
-    imagem2 = cv2.imread("1008_equalized2_exudates.jpg", 0)
-    imageAfterErosion = gettingOpticalDisk(imagem2)
-    cv2.imwrite("image after erosion.jpg", imagem2)
-
-    ## fim dos testes
-    cv2.imwrite("1008_equalized2_exudates.jpg", exudate_image)
+    # imagem2 = cv2.imread("1008_equalized2_exudates.jpg", 0)
+    # imageAfterErosion = gettingOpticalDisk(imagem2)
+    # cv2.imwrite("image after erosion.jpg", imagem2)
+    #
+    # ## fim dos testes
